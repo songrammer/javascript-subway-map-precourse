@@ -1,5 +1,5 @@
 import { TAGS } from "../utils/constants.js";
-import { setStationData } from "../utils/data.js";
+import { setStationData, getStationData } from "../utils/data.js";
 import { createButtonHandler } from "../utils/handler.js";
 export const clearDiv = () => {
   const appchild = document.querySelector("#app").children;
@@ -34,7 +34,7 @@ export const visibleLineMenu = () => {
   const lineDiv = document.querySelector("#line-container");
   lineDiv.innerHTML = "";
   lineDiv.innerHTML += `<p>노선 이름</p>
-    <input id="#line-name-input" placeholder="노선 이름을 입력해주세요"/><br><br>
+    <input id="line-name-input" placeholder="노선 이름을 입력해주세요"/><br><br>
     <label>상행 종점 <select id="line-start-station-selector"></select></label><br>
     <label>하행 종점</label>  <select id="line-end-station-selector"></select><br><br>
     <button id="line-add-button">노선 추가</button>
@@ -79,4 +79,14 @@ export const createStaionList = (stations) => {
       </td></tr>`;
   });
   return row;
+};
+
+export const pushSelect = (name) => {
+  const select = document.querySelector(name);
+  const staions = getStationData();
+  select.innerHTML = "";
+  staions.map((v) => {
+    const options = `<option data-name=${v.name}> ${v.name} </option>`;
+    select.innerHTML += options;
+  });
 };
