@@ -14,3 +14,11 @@ export const isValidateLine = (input, lines) => {
   }
   return true;
 };
+
+export const isValidateDeleteStation = (stationName, stations) => {
+  const staion = stations.find((v) => v.name === stationName);
+  if (staion.lines.length > 0) {
+    return false;
+  }
+  return true;
+};

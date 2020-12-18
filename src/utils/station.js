@@ -5,7 +5,7 @@ import {
   clearMenuDiv,
   printTable,
 } from "../view/controlView.js";
-import { isValidateSation } from "./vlidate.js";
+import { isValidateSation, isValidateDeleteStation } from "./vlidate.js";
 
 export class Station {
   constructor() {
@@ -35,9 +35,13 @@ export class Station {
   };
 }
 
-export const deleteButtonHandler = (e) => {
+export const deleteStationButtonHandler = (e) => {
   const stationName = e.target.dataset.name;
   const stations = getStationData();
+  if (!isValidateDeleteStation(stationName, stations)) {
+    alert(ERR_MESSAGE.DELETE_ERR);
+    return;
+  }
   const deleteStation = stations.filter((v) => v.name !== stationName);
   setStationData(deleteStation);
   printTable(deleteStation, "#station-container");

@@ -14,10 +14,11 @@ import {
   setStationData,
 } from "./data.js";
 import { getSelect } from "./common.js";
+
 export class Line {
   constructor() {
     this.lines = getLineData();
-    clearMenuDiv(3);
+    clearMenuDiv(TAGS.CONTANER_LINE);
     visibleLineMenu();
     printTable(this.lines, "#line-container");
     this.lineAddBtn = document.querySelector("#line-add-button");
@@ -53,7 +54,7 @@ export class Line {
     setLineData(this.lines);
   };
 
-  addLineToStaion = (name, startStation, endStation) => {
+  addLineToStaion = (name, startStation) => {
     let stations = getStationData();
     const startIndex = stations.findIndex((v) => v.name == startStation);
     if (!stations[startIndex].lines) {
@@ -61,5 +62,27 @@ export class Line {
     }
     stations[startIndex].lines.push(name);
     setStationData(stations);
+    console.log(stations);
   };
 }
+
+export const deleteLineButtonHandler = (e) => {
+  const deleteName = e.target.dataset.name;
+  const lines = getLineData();
+  const deletedLine = lines.filter((v) => v.name !== deleteName);
+  setLineData(deletedLine);
+  deleteLineFromStation(deleteName);
+  printTable(deletedLine, "#line-container");
+};
+
+export const deleteLineFromStation = (lineName) => {
+  let stations = getStationData();
+  stations.forEach((v) => {
+    if (v.lines) {
+      const deleteResult = v.lines.filter((line) => line !== lineName);
+      v.lines = deleteResult;
+    }
+  });
+  setStationData(stations);
+  console.log(stations);
+};

@@ -1,5 +1,7 @@
 export const TAGS = {
   CONTANER_STATION: 2,
+  CONTANER_LINE: 3,
+  CONTANER_SECTION: 4,
 };
 
 export const DATA = {
@@ -16,4 +18,5 @@ export const ERR_MESSAGE = {
     "중복된 역이름 이나  글자 수가 2미만인 역이름은 피해주세요",
   LINE_INPUT_ERR:
     "중복된 노선 이름 이나  글자 수가 1미만인 역이름은 피해주세요",
+  DELETE_ERR: "삭제 할 수 없습니다.",
 };

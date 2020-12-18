@@ -68,7 +68,7 @@ export const printTable = (data, containerName) => {
   table.innerHTML = "";
   table.innerHTML = decideTable(containerName, data);
   document.querySelector(containerName).append(table);
-  createButtonHandler();
+  createButtonHandler(containerName);
 };
 
 export const createStaionList = (stations) => {
