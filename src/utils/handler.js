@@ -19,12 +19,3 @@ export const mapManagerButtonHandler = () => {
   console.log("mapManagerBtn");
   new Map();
 };
-
-export const createButtonHandler = () => {
-  Array.prototype.forEach.call(
-    document.querySelectorAll(".station-delete-button"),
-    function (btn) {
-      btn.addEventListener("click", deleteButtonHandler);
-    }
-  );
-};

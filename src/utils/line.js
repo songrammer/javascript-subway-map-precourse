@@ -7,7 +7,12 @@ import {
   pushSelect,
 } from "../view/controlView.js";
 
-import { getLineData, setLineData } from "./data.js";
+import {
+  getLineData,
+  getStationData,
+  setLineData,
+  setStationData,
+} from "./data.js";
 import { getSelect } from "./common.js";
 export class Line {
   constructor() {
@@ -38,11 +43,23 @@ export class Line {
       return;
     }
     this.addLine(this.lineInput.value, startStation, endStation);
+    printTable(this.lines, "#line-container");
   };
 
   addLine = (name, startStation, endStation) => {
     this.lines.push({ name: name, stations: [startStation, endStation] });
+    this.addLineToStaion(name, endStation);
+    this.addLineToStaion(name, startStation);
     setLineData(this.lines);
-    // console.log(this.lines);
+  };
+
+  addLineToStaion = (name, startStation, endStation) => {
+    let stations = getStationData();
+    const startIndex = stations.findIndex((v) => v.name == startStation);
+    if (!stations[startIndex].lines) {
+      stations[startIndex].lines = [];
+    }
+    stations[startIndex].lines.push(name);
+    setStationData(stations);
   };
 }

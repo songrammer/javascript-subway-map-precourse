@@ -1,6 +1,6 @@
 import { TAGS } from "../utils/constants.js";
-import { setStationData, getStationData } from "../utils/data.js";
-import { createButtonHandler } from "../utils/handler.js";
+import { decideTable, createButtonHandler } from "../utils/common.js";
+import { getLineData, getStationData } from "../utils/data.js";
 export const clearDiv = () => {
   const appchild = document.querySelector("#app").children;
   for (let i = TAGS.CONTANER_STATION; i < appchild.length; i++) {
@@ -58,7 +58,7 @@ export const visibleMapMenu = () => {
     `;
 };
 
-export const printTable = (stations, containerName) => {
+export const printTable = (data, containerName) => {
   let table;
   if (!document.getElementsByTagName("table").length) {
     table = document.createElement("table");
@@ -66,7 +66,7 @@ export const printTable = (stations, containerName) => {
     table = document.querySelector("table");
   }
   table.innerHTML = "";
-  table.innerHTML = createStaionList(stations);
+  table.innerHTML = decideTable(containerName, data);
   document.querySelector(containerName).append(table);
   createButtonHandler();
 };
@@ -76,6 +76,21 @@ export const createStaionList = (stations) => {
   stations.map((v) => {
     row += `<tr><td> ${v.name} </td> 
       <td><button class="station-delete-button" data-name=${v.name}> 삭제 </button>
+      </td></tr>`;
+  });
+  return row;
+};
+
+export const createLineList = (lines) => {
+  let row = `<tr><th>노선 이름 </th><th>상행 종점역 </th>
+  <th>하행 종점역 </th><th>설정 </th>
+  </tr>`;
+  lines.map((v) => {
+    row += `<tr>
+    <td> ${v.name} </td>
+    <td> ${v.stations[0]} </td>
+    <td> ${v.stations[v.stations.length - 1]} </td> 
+    <td><button class="line-delete-button" data-name=${v.name}> 삭제 </button>
       </td></tr>`;
   });
   return row;
