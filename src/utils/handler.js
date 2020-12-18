@@ -1,7 +1,8 @@
-import { Station } from "./station.js";
+import { Station, deleteButtonHandler } from "./station.js";
 import { Line } from "./line.js";
 import { Section } from "./section.js";
 import { Map } from "./map.js";
+
 export const stationManagerButtonHandler = () => {
   console.log("clickstationManager");
   new Station();
@@ -17,4 +18,13 @@ export const sectionManagerButtonHandler = () => {
 export const mapManagerButtonHandler = () => {
   console.log("mapManagerBtn");
   new Map();
+};
+
+export const createButtonHandler = () => {
+  Array.prototype.forEach.call(
+    document.querySelectorAll(".station-delete-button"),
+    function (btn) {
+      btn.addEventListener("click", deleteButtonHandler);
+    }
+  );
 };
