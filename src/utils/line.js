@@ -17,17 +17,18 @@ import { getSelect } from "./common.js";
 
 export class Line {
   constructor() {
-    this.lines = getLineData();
+    this.lines;
     clearMenuDiv(TAGS.CONTANER_LINE);
     visibleLineMenu();
-    printTable(this.lines, "#line-container");
     this.lineAddBtn = document.querySelector("#line-add-button");
     this.lineInput = document.querySelector("#line-name-input");
     this.render();
   }
 
   render = () => {
+    this.lines = getLineData();
     this.lineAddBtn.addEventListener("click", this.lineAddBtnHandler);
+    printTable(this.lines, "#line-container");
     pushSelect("#line-start-station-selector");
     pushSelect("#line-end-station-selector");
   };

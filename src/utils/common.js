@@ -1,7 +1,11 @@
-import { createStaionList, createLineList } from "../view/controlView.js";
+import {
+  createStaionList,
+  createLineList,
+  createSectionList,
+} from "../view/controlView.js";
 import { deleteStationButtonHandler } from "./station.js";
 import { deleteLineButtonHandler } from "./line.js";
-
+import { deleteSectionButtonHandler } from "./section.js";
 export const getSelect = (name) => {
   const select = document.querySelector(name);
   return select.options[select.selectedIndex]?.dataset["name"];
@@ -13,7 +17,8 @@ export const decideTable = (containerName, data) => {
   } else if (containerName === "#line-container") {
     return createLineList(data);
   } else if (containerName === "#section-container") {
-    console.log("now");
+    console.log("passSection");
+    return createSectionList(data);
   }
 };
 
@@ -23,7 +28,7 @@ export const decideDeleteButton = (containerName) => {
   } else if (containerName === "#line-container") {
     return [deleteLineButtonHandler, ".line-delete-button"];
   } else if (containerName === "#section-container") {
-    console.log("now");
+    return [deleteSectionButtonHandler, ".section-delete-button"];
   }
 };
 

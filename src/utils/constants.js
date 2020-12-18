@@ -19,4 +19,5 @@ export const ERR_MESSAGE = {
   LINE_INPUT_ERR:
     "중복된 노선 이름 이나  글자 수가 1미만인 역이름은 피해주세요",
   DELETE_ERR: "삭제 할 수 없습니다.",
+  SECTION_INPUT_ERR: "올바르지 않는 숫자 입니다.",
 };

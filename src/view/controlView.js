@@ -1,5 +1,11 @@
 import { TAGS } from "../utils/constants.js";
-import { decideTable, createButtonHandler } from "../utils/common.js";
+import { Section, createLineAddButtonHandler } from "../utils/section.js";
+
+import {
+  decideTable,
+  createButtonHandler,
+  getSelect,
+} from "../utils/common.js";
 import { getLineData, getStationData } from "../utils/data.js";
 export const clearDiv = () => {
   const appchild = document.querySelector("#app").children;
@@ -47,6 +53,7 @@ export const visibleSectionMenu = () => {
   sectionDiv.innerHTML = "";
   sectionDiv.innerHTML += `
     <h3>구간을 수정할 노선을 선택해주세요</h3>
+    <div id="section-button"></div>
     `;
 };
 
@@ -69,6 +76,34 @@ export const printTable = (data, containerName) => {
   table.innerHTML = decideTable(containerName, data);
   document.querySelector(containerName).append(table);
   createButtonHandler(containerName);
+};
+
+export const printLineButton = (lines) => {
+  const sectionContainer = document.querySelector("#section-button");
+  sectionContainer.innerHTML = "";
+  lines.map((v) => {
+    const buttons = `<button data-name="${v.name}" class="section-line-menu-button">${v.name}</button>`;
+    sectionContainer.innerHTML += buttons;
+  });
+};
+
+export const printSectionManager = (line) => {
+  createSectionAddManager();
+  const sectionManager = document.querySelector("#section-add-manager");
+  sectionManager.innerHTML = "";
+  sectionManager.innerHTML = createSectionManage(line.name);
+  pushSelect("#section-station-selector");
+  printTable(line, "#section-container");
+  createLineAddButtonHandler(line.name);
+};
+
+export const createSectionAddManager = () => {
+  const sectionContainer = document.querySelector("#section-container");
+  if (!document.querySelector("#section-add-manager")) {
+    const div = document.createElement("div");
+    div.setAttribute("id", "section-add-manager");
+    sectionContainer.append(div);
+  }
 };
 
 export const createStaionList = (stations) => {
@@ -94,6 +129,30 @@ export const createLineList = (lines) => {
       </td></tr>`;
   });
   return row;
+};
+
+export const createSectionList = (line) => {
+  let row = `<tr><th>순서 </th><th>이름</th><th>설정 </th>
+  </tr>`;
+
+  line.stations.map((v, index) => {
+    row += `<tr>
+    <td> ${index} </td>
+    <td> ${v} </td>
+    <td><button class="section-delete-button" data-name=${v}> 노선에서 제거</button>
+      </td></tr>`;
+  });
+  return row;
+};
+
+export const createSectionManage = (name) => {
+  let rows = `<h3>${name}관리</h3>
+  <h4>구간 등록</h4>
+  <select id="section-station-selector"/>
+  <input id="section-order-input" type="number"placeholder="순서"/>
+  <button id="section-add-button">등록</input>
+  `;
+  return rows;
 };
 
 export const pushSelect = (name) => {

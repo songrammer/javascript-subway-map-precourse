@@ -22,3 +22,10 @@ export const isValidateDeleteStation = (stationName, stations) => {
   }
   return true;
 };
+
+export const isValidateOrder = (line, order) => {
+  if (!(order > 0 && order < line.stations.length)) {
+    return false;
+  }
+  return true;
+};
